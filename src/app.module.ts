@@ -1,10 +1,9 @@
 import { Module } from '@nestjs/common';
 import { UploadModule } from './modules/upload/upload.module';
-import { UploadController } from './modules/upload/upload.controller';
+import { ConfigModule } from '@nestjs/config';
 
 @Module({
-  imports: [UploadModule],
-  controllers: [UploadController],
+  imports: [ConfigModule.forRoot({ isGlobal: true }), UploadModule],
   providers: [],
 })
 export class AppModule {}
