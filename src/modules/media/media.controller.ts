@@ -1,22 +1,28 @@
 import {
+  Body,
   Controller,
+  Get,
   ParseFilePipe,
   Post,
   UploadedFile,
   UseInterceptors,
-  // FileTypeValidator,
-  // MaxFileSizeValidator,
 } from '@nestjs/common';
 import { FileInterceptor } from '@nestjs/platform-express';
-import { UploadService } from './upload.service';
+import { MediaService } from './media.service';
+import { CreateMediaDto } from './dto/create-media.dto';
 
-@Controller('upload')
-export class UploadController {
-  constructor(private readonly uploadService: UploadService) {}
+@Controller('medias')
+export class MediaController {
+  constructor(private readonly mediaService: MediaService) {}
+
+  @Get()
+  findAll() {
+    return this.mediaService.findAll();
+  }
 
   @Post()
   @UseInterceptors(FileInterceptor('file'))
-  uploadFile(
+  create(
     @UploadedFile(
       new ParseFilePipe({
         validators: [
@@ -26,7 +32,8 @@ export class UploadController {
       }),
     )
     file: Express.Multer.File,
+    @Body() body: CreateMediaDto,
   ) {
-    return this.uploadService.upload(file.originalname, file.buffer);
+    return this.mediaService.create(body, file);
   }
 }

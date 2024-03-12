@@ -19,18 +19,21 @@ export class UploadService {
 
   constructor(private readonly configService: ConfigService) {}
 
-  async upload(fileName: string, file: Buffer) {
+  async upload(key: string, file: Express.Multer.File) {
+    const fileName = `${key}.${file.originalname.split('.').pop()}`;
+
     const input: PutObjectCommandInput = {
       Bucket: this.bucketName,
       Key: fileName,
-      Body: file,
+      Body: file.buffer,
+      ContentType: file.mimetype,
     };
 
     try {
       await this.s3Client.send(new PutObjectCommand(input));
 
       return {
-        url: `https://${this.bucketName}.s3.${this.region}.amazonaws.com/${fileName}`,
+        url: `https://${this.bucketName}.s3.${this.region}.amazonaws.com/${key}`,
       };
     } catch (err) {
       throw new BadRequestException(err.message);
