@@ -32,7 +32,7 @@ export class MediaService {
     return await this.prisma.media.create({
       data: {
         title,
-        fileName: fileName,
+        s3Name: fileName,
         description,
         type: mimetype,
         url,
