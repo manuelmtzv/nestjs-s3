@@ -25,14 +25,14 @@ export class MediaService {
   async create(dto: CreateMediaDto, file: Express.Multer.File) {
     const key: string = uuidv4();
     const { title, description } = dto;
-    const { originalname, mimetype } = file;
+    const { mimetype } = file;
 
-    const { url } = await this.uploadService.upload(key, file);
+    const { fileName, url } = await this.uploadService.upload(key, file);
 
     return await this.prisma.media.create({
       data: {
         title,
-        fileName: originalname,
+        fileName: fileName,
         description,
         type: mimetype,
         url,

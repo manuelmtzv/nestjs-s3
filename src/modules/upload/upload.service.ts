@@ -33,6 +33,7 @@ export class UploadService {
       await this.s3Client.send(new PutObjectCommand(input));
 
       return {
+        fileName,
         url: `https://${this.bucketName}.s3.${this.region}.amazonaws.com/${fileName}`,
       };
     } catch (err) {

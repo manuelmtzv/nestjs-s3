@@ -15,7 +15,7 @@
     "db:dev:migrate": "npx prisma migrate dev",
     "db:dev:up": "docker-compose up -d && npm run db:dev:migrate",
     "db:dev:restart": "docker-compose down && npm run db:dev:up",
-    "db:dev:restart-volumes": "docker-compose down --volumes && npm run db:dev:up",
+    "db:dev:restart-volumes": "docker-compose down -v && npm run db:dev:up",
     "lint": "eslint \"{src,apps,libs,test}/**/*.ts\" --fix",
     "test": "jest",
     "test:watch": "jest --watch",
