@@ -59,7 +59,7 @@ Before running this project, ensure you have the following installed:
 4. Set up the database url in the environment variables:
    
     ```
-    DATABASE_URL={ example: postgresql://postgres:postgres@localhost:5432/media-db?schema=public }
+    DATABASE_URL="postgresql://postgres:postgres@localhost:5432/media-db?schema=public"
     ```
 
 ### Usage
